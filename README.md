@@ -1,7 +1,5 @@
-# web-forum
-Trabalho da disciplina de Desenvolvimento Web
-
 # Webforum - Projeto de Troca de Mensagens
+Trabalho da disciplina de Desenvolvimento Web
 
 ## Descrição
 
