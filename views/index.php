@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Web Forum</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
+
 <body>
     <section class="container">
         <div class="imagem">
@@ -20,4 +22,5 @@
         </div>
     </section>
 </body>
+
 </html>

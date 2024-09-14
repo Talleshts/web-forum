@@ -1,0 +1,45 @@
+<?php
+
+require_once '../dao/usuarioDAO.inc.php';
+
+$opcao = $_REQUEST['pOpcao'];
+
+switch ($opcao) {
+    case 1:
+        // fazer login
+        $email = $_REQUEST['pLogin'];
+        $senha = $_REQUEST['pSenha'];
+
+        $usuarioDao = new UsuarioDao();
+        $usuario = $usuarioDao->autenticarUsuario($email, $senha);
+
+        session_start();
+        if ($usuario == null) {
+            $_SESSION['loginErro'] = true;
+            header('Location: ../views/login.php');
+        } else {
+            $_SESSION['usuarioLogado'] = $usuario;
+            header('Location: ../views/visualizarMensagens.php');
+        }
+        break;
+    case 2:
+        // cadastrar
+        $email = $_REQUEST['pEmail'];
+        $nome = $_REQUEST['pNome'];
+        $senha = $_REQUEST['pSenha'];
+        $hashSenha = password_hash($senha, PASSWORD_BCRYPT);
+
+        $usuarioDao = new UsuarioDao();
+        $resposta = $usuarioDao->cadastrarUsuario($email, $nome, $hashSenha);
+
+        if ($resposta == true) {
+            header('Location: ../views/login.php');
+        } else {
+            session_start();
+            $_SESSION['cadastroErro'] = true;
+            header('Location: ../views/cadastro.php');
+        }
+
+        header('Location: ../views/login.php');
+        break;
+}
