@@ -1,5 +1,7 @@
 <?php
 require_once '../dao/usuarioDAO.inc.php';
+require_once '../dao/mensagemDao.inc.php';
+require_once '../classes/mensagem.inc.php';
 
 $opcao = $_REQUEST['pOpcao'];
 
@@ -11,5 +13,43 @@ switch ($opcao) {
         $usuarios = $usuarioDao->obterTodosUsuarios();
         session_start();
         $_SESSION['usuarios'] = $usuarios;
+
+        $mensagemDao = new MensagemDao();
+        $mensagens = $mensagemDao->obterTodasMensagensRecebidas($_SESSION['usuarioLogado']->id);
+        $_SESSION['mensagens'] = $mensagens;
+
         header('Location: ../views/visualizarMensagens.php');
+        break;
+
+    case 2:
+        // enviar mensagem
+        $remetente_id = $_REQUEST['pRemetente'];
+        $destinatario_id = $_REQUEST['pDestinatario'];
+        $conteudo = $_REQUEST['pCorpo'];
+        $assunto = $_REQUEST['pAssunto'];
+        $titulo = $_REQUEST['pTitulo'];
+
+        $mensagem = new Mensagem();
+        $mensagem->criarMensagem($remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);
+
+        $mensagemDao = new MensagemDao();
+        $mensagemDao->enviarMensagem($mensagem);
+
+        session_start();
+        $_SESSION['mensagemEnviada'] = true;
+
+        header('Location: controllerMensagem.php?pOpcao=1');
+
+        break;
+
+    case 3:
+        // excluir mensagem
+        $id = $_REQUEST['pId'];
+
+        $mensagemDao = new MensagemDao();
+        $mensagemDao->excluirMensagem($id);
+
+        header('Location: controllerMensagem.php?pOpcao=1');
+
+        break;
 }
