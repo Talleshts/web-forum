@@ -55,6 +55,22 @@ class UsuarioDao
         return $usuario;
     }
 
+    public function obterTodosUsuarios()
+    {
+        $sql = $this->con->query("SELECT idUsuario, email, nome FROM usuario");
+        $usuarioResponse = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $usuarios = [];
+
+        foreach ($usuarioResponse as $us) {
+            $usuario = new Usuario();
+            $usuario->setUsuario($us['idUsuario'], $us['email'], $us['nome']);
+            $usuarios[] = $usuario;
+        }
+
+        return $usuarios;
+    }
+
     public function excluirUsuario($id)
     {
         $sql = $this->con->prepare("DELETE FROM clientes WHERE id =:id");

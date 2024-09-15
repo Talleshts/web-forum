@@ -1,3 +1,7 @@
+<?php
+require_once 'includes/cabecalho.inc.php';
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -52,4 +56,6 @@
     </section>
 </body>
 
-</html>
+<?php
+require_once 'includes/rodape.inc.php';
+?>

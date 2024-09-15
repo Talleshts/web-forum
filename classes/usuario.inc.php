@@ -6,15 +6,25 @@ class Usuario
     private $login;
     private $nome;
     private $senha;
+    private $id;
 
     // Email e Login serão iguais
 
-    function __construct($email, $nome, $senha)
+    function __construct() {}
+
+    function cadastrarUsuario($email, $nome, $hashSenha)
     {
         $this->email = $email;
         $this->login = $email;
         $this->nome = $nome;
-        $this->senha = $senha;
+        $this->senha = $hashSenha;
+    }
+
+    function setUsuario($id, $email, $nome)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->nome = $nome;
     }
 
     function __get($atributo)

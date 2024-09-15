@@ -19,7 +19,7 @@ switch ($opcao) {
             header('Location: ../views/login.php');
         } else {
             $_SESSION['usuarioLogado'] = $usuario;
-            header('Location: ../views/visualizarMensagens.php');
+            header('Location: controllerMensagem.php?pOpcao=1');
         }
         break;
     case 2:
@@ -41,5 +41,12 @@ switch ($opcao) {
         }
 
         header('Location: ../views/login.php');
+        break;
+
+    case 3:
+        // sair
+        session_start();
+        session_destroy();
+        header('Location: ../views/index.php');
         break;
 }
