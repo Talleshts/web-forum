@@ -27,10 +27,9 @@ switch ($opcao) {
         $email = $_REQUEST['pEmail'];
         $nome = $_REQUEST['pNome'];
         $senha = $_REQUEST['pSenha'];
-        $hashSenha = password_hash($senha, PASSWORD_BCRYPT);
 
         $usuarioDao = new UsuarioDao();
-        $resposta = $usuarioDao->cadastrarUsuario($email, $nome, $hashSenha);
+        $resposta = $usuarioDao->cadastrarUsuario($email, $nome, $senha);
 
         if ($resposta == true) {
             header('Location: ../views/login.php');

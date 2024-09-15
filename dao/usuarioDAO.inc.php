@@ -12,7 +12,7 @@ class UsuarioDao
         $this->con = $c->getConexao();
     }
 
-    public function cadastrarUsuario($email, $nome, $hashSenha)
+    public function cadastrarUsuario($email, $nome, $senha)
     {
         $cadastroRealizado = false;
 
@@ -23,7 +23,7 @@ class UsuarioDao
             $sql = $this->con->prepare("INSERT INTO usuario (email, login, nome, senha) VALUES (:email, :email, :nome, :senha)");
             $sql->bindValue(':email', $email);
             $sql->bindValue(':nome', $nome);
-            $sql->bindValue(':senha', $hashSenha);
+            $sql->bindValue(':senha', $senha);
             $sql->execute();
             $cadastroRealizado = true;
         }
@@ -41,13 +41,13 @@ class UsuarioDao
 
         if ($sql->rowCount() == 1) {
             $usuarioResponse = $sql->fetch(PDO::FETCH_ASSOC);
-            $usuario = new Usuario(
-                $usuarioResponse['email'],
-                $usuarioResponse['nome'],
-                $usuarioResponse['senha']
-            );
 
-            if (password_verify($senha, $usuario->senha)) {
+            var_dump($usuarioResponse['senha']);
+            var_dump($senha);
+
+            if ($senha == $usuarioResponse['senha']) {
+                $usuario = new Usuario();
+                $usuario->setUsuario($usuarioResponse['idUsuario'], $usuarioResponse['email'], $usuarioResponse['nome']);
                 return $usuario;
             }
         }

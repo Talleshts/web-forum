@@ -1,9 +1,7 @@
 <?php
+require_once '../classes/usuario.inc.php';
 require_once 'includes/cabecalho.inc.php';
 ?>
-
-<!DOCTYPE html>
-<html>
 
 <head>
     <title>Visualizar Mensagens</title>

@@ -1,8 +1,8 @@
 <?php
 $usuarios = $_SESSION['usuarios'];
-var_dump($usuarios);
-?>
 
+var_dump($_SESSION['usuarioLogado']);
+?>
 
 <a href="#" class="nav-link px-2 link-secondary" data-bs-toggle="modal" data-bs-target="#mensagemModal">Escrever Mensagem</a>
 
@@ -18,21 +18,29 @@ var_dump($usuarios);
                 <form action="enviar_mensagem.php" method="post">
                     <div class="mb-3">
                         <label for="usuarios" class="form-label">Usuários:</label>
-                        <select name="usuarios" id="usuarios" class="form-select">
+                        <!-- fazer select com pesquisa de usuaórios -->
+                        <select name="dUsuario" class="form-select">
                             <?php
                             foreach ($usuarios as $usuario) {
-                                echo "<option value='" . htmlspecialchars($usuario->id) . "'>" . htmlspecialchars($usuario->email) . "</option>";
+                                echo 'teste' . "<option value='" . $usuario->email . "'>" . $usuario->nome . "</option>";
                             }
                             ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="titulo" class="form-label">Título:</label>
-                        <input type="text" name="titulo" id="titulo" class="form-control">
+                        <label for="dTitulo" class="form-label">Título:</label>
+                        <input type="text" name="dTitulo" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="corpo" class="form-label">Corpo:</label>
-                        <textarea name="corpo" id="corpo" class="form-control" rows="5"></textarea>
+                        <label for="dAssunto" class="form-label">Assunto:</label>
+                        <input type="text" name="dAssunto" class="form-control">
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <label for="dCorpo" class="form-label">Corpo:</label>
+                        <small class="text-muted" style="align-self: center;">Limite de 5000 caracteres</small>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="dCorpo" class="form-control" rows="5" maxlength="5000"></textarea>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" value="Enviar">
