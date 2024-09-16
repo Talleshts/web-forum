@@ -15,6 +15,9 @@ if (isset($_SESSION['mensagemEnviada'])) {
 </head>
 
 <body>
+
+    <!-- usar ajax para carregar as mensagens -->
+
     <section>
         <div class="mensagem-list">
             <ul>
@@ -28,7 +31,6 @@ if (isset($_SESSION['mensagemEnviada'])) {
                             <img src="https://via.placeholder.com/50" alt="Imagem do Usuário">
                             <p><?= $mensagem->remetente ?></p>
                             <p><?= $mensagem->assunto ?></p>
-                            <!-- <a href="../controllers/controllerMensagem.php?pOpcao=3&pId=<?= $mensagem->id ?>">Excluir</a> -->
                             <?php
                             include_once "./includes/modalExcluirMensagem.inc.php";
                             ?>

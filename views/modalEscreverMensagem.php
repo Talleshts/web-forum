@@ -17,7 +17,8 @@ $usuarios = $_SESSION['usuarios'];
                     <div class="mb-3">
                         <label for="usuarios" class="form-label">Destinatários:</label>
                         <!-- fazer select com pesquisa de usuários -->
-                        <select name="pDestinatario" class="form-select">
+                        <select name="pDestinatario" id="pDestinatario" class="form-select" onchange="toggleSubmitButton()">
+                            <option value="0" selected>Selecione um destinatário</option>
                             <?php
                             foreach ($usuarios as $usuario) {
                                 // fazer aparecer o email abaixo do nome do usuario
@@ -42,7 +43,7 @@ $usuarios = $_SESSION['usuarios'];
                         <textarea name="pCorpo" class="form-control" rows="5" maxlength="5000"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Enviar">
+                        <input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" disabled>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     </div>
                     <input type="hidden" name="pOpcao" value="2">
@@ -52,5 +53,7 @@ $usuarios = $_SESSION['usuarios'];
         </div>
     </div>
 </div>
+
+<script src="../js/modalEscreverMensagem.js"></script>
 
 </html>

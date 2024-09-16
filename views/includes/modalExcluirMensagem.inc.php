@@ -1,7 +1,10 @@
 <!-- Modal -->
 <!-- Button trigger modal -->
+
+<!-- ajustar o botão com o icone -->
+
 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModalExcluir">
-    Excluir
+    <img src="../images/icons/lixo.png" alt="Excluir" width="10" height="10">
 </button>
 
 <!-- Modal -->
