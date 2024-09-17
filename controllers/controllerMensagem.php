@@ -18,7 +18,7 @@ switch ($opcao) {
         $mensagens = $mensagemDao->obterTodasMensagensRecebidas($_SESSION['usuarioLogado']->id);
         $_SESSION['mensagens'] = $mensagens;
 
-        header('Location: ../views/visualizarMensagens.php');
+        header('Location: ../views/visualizarMensagens2.php');
         break;
 
     case 2:

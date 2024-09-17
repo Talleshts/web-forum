@@ -54,6 +54,23 @@ class MensagemDao
         return $mensagens;
     }
 
+    public function obterMensagemPorId($id)
+    {
+        $sql = $this->con->prepare("SELECT *, (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as email_remetente FROM mensagem WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        $msg = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if ($msg) {
+            $mensagem = new Mensagem();
+            $mensagem->setMensagem($msg['id'], $msg['email_remetente'], $msg['destinatario'], $msg['data'], $msg['conteudo'], $msg['titulo'], $msg['assunto']);
+            return $mensagem;
+        }
+
+        return null;
+    }
+
     public function enviarMensagem($mensagem)
     {
         $sql = $this->con->prepare("INSERT INTO mensagem (remetente, destinatario, conteudo, titulo, assunto, data) VALUES (:id, :destinatario_id, :conteudo, :titulo, :assunto, :data)");
