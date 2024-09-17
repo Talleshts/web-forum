@@ -3,6 +3,12 @@ body {
   background: #eee;
 }
 
+.panel-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
 .message-wrapper {
   padding: 0px;
   background-color: #ffffff;
