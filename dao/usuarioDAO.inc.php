@@ -42,9 +42,6 @@ class UsuarioDao
         if ($sql->rowCount() == 1) {
             $usuarioResponse = $sql->fetch(PDO::FETCH_ASSOC);
 
-            var_dump($usuarioResponse['senha']);
-            var_dump($senha);
-
             if ($senha == $usuarioResponse['senha']) {
                 $usuario = new Usuario();
                 $usuario->setUsuario($usuarioResponse['idUsuario'], $usuarioResponse['email'], $usuarioResponse['nome']);

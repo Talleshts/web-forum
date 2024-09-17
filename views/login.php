@@ -1,13 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
+    <title>Login - Web Forum</title>
     <link rel="stylesheet" type="text/css" href="css/login.css" />
 </head>
 
 <body>
     <section class="container">
         <form action="../controllers/controllerUsuario.php" method="post">
+            <a href="index.php">
+                <div class="voltar">
+                    <img src="assets/seta-voltar.png" alt="seta virada para a esquerda" class="seta">
+                    <p class="back-button">
+                        &#8592; &nbsp Voltar para o site
+                    </p>
+                </div>
+            </a>
             <h1>Login</h1>
             <input type="text" name="pLogin" placeholder="Login" required>
             <input type="password" name="pSenha" placeholder="Senha" required>
@@ -24,7 +33,6 @@
         <div class="button-container">
             <button onclick="window.location.href='cadastro.php'">Cadastre-se</button>
             <button onclick="window.location.href='recuperarSenha.php'">Esqueceu sua senha?</button>
-            <button onclick="window.location.href='index.php'">Voltar para o site</button>
         </div>
     </section>
 </body>

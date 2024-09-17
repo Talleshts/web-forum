@@ -24,6 +24,14 @@
 <body>
     <section class="container">
         <form action="../controllers/controllerUsuario.php" method="post" onsubmit="return validarSenhas()">
+            <a href="index.php">
+                <div class="voltar">
+                    <img src="assets/seta-voltar.png" alt="seta virada para a esquerda" class="seta">
+                    <p class="back-button">
+                        &#8592; &nbsp Voltar para o site
+                    </p>
+                </div>
+            </a>
             <h1>Cadastro</h1>
             <!-- <input type="text" name="apelido" placeholder="Apelido" required> -->
             <input type="text" name="pNome" placeholder="Nome" required>
@@ -41,8 +49,9 @@
             <input type="hidden" value="2" name="pOpcao">
         </form>
         <div class="button-container">
-            <button onclick="window.location.href='login.php'">Login</button>
-            <button onclick="window.location.href='index.php'">Voltar para o site</button>
+            <center>
+                <button onclick="window.location.href='login.php'">Fazer Login</button>
+            </center>
         </div>
     </section>
 </body>
