@@ -3,13 +3,28 @@ require_once '../classes/usuario.inc.php';
 require_once '../classes/mensagem.inc.php';
 require_once '../dao/mensagemDao.inc.php';
 require_once 'includes/cabecalho.inc.php';
+require_once 'includes/carregamento-sucesso.inc.php';
+
 
 $mensagens = $_SESSION['mensagens'] ?? [];
 $mensagemSelecionada = null;
 
-if (isset($_SESSION['mensagemEnviada'])) {
-    echo "<script>alert('Mensagem enviada com sucesso!')</script>";
+if (isset($_SESSION['mensagemEnviada']) && $_SESSION['mensagemEnviada'] === true) {
+    // Remove a flag imediatamente antes de continuar, para garantir que não reapareça
     unset($_SESSION['mensagemEnviada']);
+
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            loadingModal.show();
+            showLoading();
+            
+            // Aguarda o tempo do carregamento e mostra o sucesso
+            setTimeout(function() {
+                showSuccess();
+            }, 1500);
+        });
+    </script>";
 }
 
 // Verifica se um ID de mensagem foi passado na URL
