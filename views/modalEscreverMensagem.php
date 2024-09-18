@@ -1,5 +1,9 @@
 <?php
 $usuarios = $_SESSION['usuarios'];
+$msg_selecionada = null;
+if (isset($_SESSION['mensagemSelecionada'])) {
+    $msg_selecionada = $_SESSION['mensagemSelecionada'];
+}
 ?>
 
 <a href="#" class="nav-link px-2 link-secondary" data-bs-toggle="modal" data-bs-target="#mensagemModal">Escrever Mensagem</a>
@@ -18,11 +22,17 @@ $usuarios = $_SESSION['usuarios'];
                         <label for="usuarios" class="form-label">Destinatários:</label>
                         <!-- fazer select com pesquisa de usuários -->
                         <select name="pDestinatario" id="pDestinatario" class="form-select" onchange="toggleSubmitButton()">
-                            <option value="0" selected>Selecione um destinatário</option>
                             <?php
-                            foreach ($usuarios as $usuario) {
-                                // fazer aparecer o email abaixo do nome do usuario
-                                echo "<option value='" . $usuario->id . "' title='" . $usuario->email . "'>" . $usuario->nome . "</option>";
+                            if ($msg_selecionada != null) {
+                                echo '<option value="' . $msg_selecionada->remetente_id . "' title='" . $msg_selecionada->remetente_email . '" selected disabled>' . $msg_selecionada->remetente_nome . '</option>';
+                            } else {
+                            ?>
+                                <option value="0" selected>Selecione um destinatário</option>
+                            <?php
+                                foreach ($usuarios as $usuario) {
+                                    // fazer aparecer o email abaixo do nome do usuario
+                                    echo "<option value='" . $usuario->id . "' title='" . $usuario->email . "'>" . $usuario->nome . " selected</option>";
+                                }
                             }
                             ?>
                         </select>
@@ -43,15 +53,23 @@ $usuarios = $_SESSION['usuarios'];
                         <textarea name="pCorpo" class="form-control" rows="5" maxlength="5000"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="pImagem" class="form-label">Foto:</label>
+                        <label for="pImagem" class="form-label">Foto: <?= $msg_selecionada->remetente_id ?></label>
                         <input type="file" class="form-control" name="pImagem">
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" disabled>
+                        <?php
+                        $desabilitado = ($msg_selecionada != null) ? '' : 'disabled';
+                        echo '<input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" ' .    $desabilitado . '>'
+                        ?>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     </div>
                     <input type="hidden" name="pOpcao" value="2">
                     <input type="hidden" name="pRemetente" value="<?= $_SESSION['usuarioLogado']->id; ?>">
+                    <?php
+                    if ($msg_selecionada != null) {
+                        echo '<input type="hidden" name="pConversa" value="' . $msg_selecionada->id_conversa . '">';
+                    }
+                    ?>
                 </form>
             </div>
         </div>

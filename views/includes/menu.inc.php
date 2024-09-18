@@ -10,7 +10,7 @@
 
         <li>
             <?php
-            include_once "./modalEscreverMensagem.php";
+            include "./modalEscreverMensagem.php";
             ?>
         </li>
 

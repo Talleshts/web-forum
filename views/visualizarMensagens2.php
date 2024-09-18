@@ -2,8 +2,8 @@
 require_once '../classes/usuario.inc.php';
 require_once '../classes/mensagem.inc.php';
 require_once '../dao/mensagemDao.inc.php';
-require_once 'includes/cabecalho.inc.php';
 require_once 'includes/carregamento-sucesso.inc.php';
+require_once 'includes/cabecalho.inc.php';
 
 
 $mensagens = $_SESSION['mensagens'] ?? [];
@@ -32,6 +32,7 @@ if (isset($_GET['mensagemId'])) {
     foreach ($mensagens as $mensagem) {
         if ($mensagem->id == $_GET['mensagemId']) {
             $mensagemSelecionada = $mensagem;
+            $_SESSION['mensagemSelecionada'] = $mensagemSelecionada;
             break;
         }
     }
@@ -91,6 +92,15 @@ if (isset($_GET['mensagemId'])) {
                         <h4><?= htmlspecialchars($mensagemSelecionada->titulo) ?></h4>
                         <p><?= htmlspecialchars($mensagemSelecionada->conteudo) ?></p>
                         <img src="images/mensagens/<?= $mensagemSelecionada->id ?>.jpg" alt="img" class="img-ajustada">
+
+                        <?php
+                        // Certifique-se de que a variável existe antes de usar
+                        if (isset($mensagemSelecionada)) {
+                            include 'modalEscreverMensagem.php';
+                        } else {
+                            echo 'Mensagem não encontrada!';
+                        }
+                        ?>
                     <?php } ?>
                 </div>
             </div>

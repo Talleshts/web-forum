@@ -22,17 +22,28 @@ switch ($opcao) {
         break;
 
     case 2:
-        // enviar mensagem
+        // enviar mensagem com nova conversa
         $remetente_id = $_REQUEST['pRemetente'];
         $destinatario_id = $_REQUEST['pDestinatario'];
         $conteudo = $_REQUEST['pCorpo'];
         $assunto = $_REQUEST['pAssunto'];
         $titulo = $_REQUEST['pTitulo'];
 
-        $mensagem = new Mensagem();
-        $mensagem->criarMensagem($remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);
-
         $mensagemDao = new MensagemDao();
+
+        $id_conversa = null;
+
+        if (isset($_REQUEST['pConversa'])) {
+            $id_conversa = $_REQUEST['pConversa'];
+        } else {
+            $id_conversa = $mensagemDao->criarConversa();
+        }
+
+        echo '<alert>id_conversa: ' . $id_conversa . '</alert>';
+
+        $mensagem = new Mensagem();
+        $mensagem->criarMensagem($id_conversa, $remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);
+
         $id_mensagem = $mensagemDao->enviarMensagem($mensagem);
 
         if ($_FILES['pImagem']['size'] > 0) {
@@ -55,6 +66,9 @@ switch ($opcao) {
 
         header('Location: controllerMensagem.php?pOpcao=1');
 
+        break;
+
+    default:
         break;
 }
 
