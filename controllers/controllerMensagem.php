@@ -31,7 +31,7 @@ switch ($opcao) {
 
 
         $mensagem = new Mensagem();
-        $mensagem->criarMensagem($remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);
+        $mensagem->criarMensagem($id_conversa, $remetente_id, $destinatario_id, $conteudo, $titulo, $assunto);
 
         $mensagemDao = new MensagemDao();
 
