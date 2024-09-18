@@ -23,7 +23,7 @@
 
 <body>
     <section class="container">
-        <form action="../controllers/controllerUsuario.php" method="post" onsubmit="return validarSenhas()">
+        <form action="../controllers/controllerUsuario.php" method="post" onsubmit="return validarSenhas()" enctype="multipart/form-data">
             <a href="index.php">
                 <div class="voltar">
                     <img src="assets/seta-voltar.png" alt="seta virada para a esquerda" class="seta">
@@ -38,6 +38,9 @@
             <input type="email" name="pEmail" placeholder="Email" required>
             <input type="password" name="pSenha" placeholder="Senha" required>
             <input type="password" name="pConfirmar_senha" placeholder="Confirmar Senha" required>
+            <label for="pImagem" class="form-label">Foto de Perfil:</label>
+            <input type="file" class="form-control" name="pImagem">
+
             <?php
             session_start();
             if (isset($_SESSION['cadastroErro'])) {

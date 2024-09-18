@@ -23,13 +23,14 @@ if (isset($_SESSION['mensagemEnviada'])) {
             <ul>
                 <?php
                 $mensagens = $_SESSION['mensagens'];
+                var_dump($mensagens);
 
                 foreach ($mensagens as $mensagem) {
                 ?>
                     <li>
                         <div class="mensagem" onclick="showMessage(1)">
                             <img src="https://via.placeholder.com/50" alt="Imagem do Usuário">
-                            <p><?= $mensagem->remetente ?></p>
+                            <p><?= $mensagem->remetente_nome ?></p>
                             <p><?= $mensagem->assunto ?></p>
                             <?php
                             include_once "./includes/modalExcluirMensagem.inc.php";

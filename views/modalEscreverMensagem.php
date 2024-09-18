@@ -13,7 +13,7 @@ $usuarios = $_SESSION['usuarios'];
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form action="../controllers/controllerMensagem.php" method="post">
+                <form action="../controllers/controllerMensagem.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="usuarios" class="form-label">Destinatários:</label>
                         <!-- fazer select com pesquisa de usuários -->
@@ -41,6 +41,10 @@ $usuarios = $_SESSION['usuarios'];
                     </div>
                     <div class="mb-3">
                         <textarea name="pCorpo" class="form-control" rows="5" maxlength="5000"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pImagem" class="form-label">Foto:</label>
+                        <input type="file" class="form-control" name="pImagem">
                     </div>
                     <div class="modal-footer">
                         <input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" disabled>

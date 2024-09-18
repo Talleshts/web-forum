@@ -29,9 +29,10 @@ switch ($opcao) {
         $senha = $_REQUEST['pSenha'];
 
         $usuarioDao = new UsuarioDao();
-        $resposta = $usuarioDao->cadastrarUsuario($email, $nome, $senha);
+        $id_usuario = $usuarioDao->cadastrarUsuario($email, $nome, $senha);
 
-        if ($resposta == true) {
+        if ($id_usuario != null) {
+            uploadImagemCadastro($id_usuario);
             header('Location: ../views/login.php');
         } else {
             session_start();
@@ -48,4 +49,25 @@ switch ($opcao) {
         session_destroy();
         header('Location: ../views/index.php');
         break;
+}
+
+function uploadImagemCadastro($id)
+{
+    $imagem = $_FILES['pImagem'];
+    $nome = $id . '.jpg';
+    $caminho = '../views/images/perfil/' . $nome;
+
+    if ($imagem != null) {
+        $nome_temporario = $_FILES['pImagem']['tmp_name'];
+        copy($nome_temporario, $caminho);
+    }
+}
+
+function excluirImagem($id)
+{
+    $nome = $id . '.jpg';
+    $caminho = '../views/images/perfil/' . $nome;
+    if (file_exists($caminho)) {
+        unlink($caminho);
+    }
 }

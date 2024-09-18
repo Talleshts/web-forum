@@ -13,10 +13,16 @@ class MensagemDao
 
     public function obterTodasMensagensRecebidas($id)
     {
-        $sql = $this->con->prepare("SELECT *, (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as email_remetente FROM mensagem WHERE destinatario =:id ORDER BY data DESC");
+        $sql = $this->con->prepare(
+            "SELECT *, 
+            (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.destinatario) as destinatario_email,
+            (SELECT nome FROM usuario WHERE usuario.idUsuario = mensagem.destinatario) as destinatario_nome,
+            (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as remetente_email,
+            (SELECT nome FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as remetente_nome 
+            FROM mensagem WHERE destinatario LIKE :id ORDER BY data DESC"
+        );
         $sql->bindValue(':id', $id);
         $sql->execute();
-
 
         $mensagens = [];
 
@@ -25,7 +31,17 @@ class MensagemDao
 
             foreach ($mensagensResponse as $msg) {
                 $mensagem = new Mensagem();
-                $mensagem->setMensagem($msg['id'], $msg['email_remetente'], $msg['destinatario'], $msg['data'], $msg['conteudo'], $msg['titulo'], $msg['assunto']);
+                $mensagem->setMensagem(
+                    $msg['id'],
+                    $msg['remetente_email'],
+                    $msg['remetente_nome'],
+                    $msg['destinatario_email'],
+                    $msg['destinatario_nome'],
+                    $msg['data'],
+                    $msg['conteudo'],
+                    $msg['titulo'],
+                    $msg['assunto']
+                );
                 $mensagens[] = $mensagem;
             }
         }
@@ -35,7 +51,14 @@ class MensagemDao
 
     public function obterTodasMensagensEnviadas($id)
     {
-        $sql = $this->con->prepare("SELECT *, (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.destinatario) as email_destinatario FROM mensagem WHERE remetente =:id ORDER BY data DESC");
+        $sql = $this->con->prepare(
+            "SELECT *, 
+            (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.destinatario) as destinatario_email,
+            (SELECT nome FROM usuario WHERE usuario.idUsuario = mensagem.destinatario) as destinatario_nome,
+            (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as remetente_email,
+            (SELECT nome FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as remetente_nome 
+            FROM mensagem WHERE remetente =:id ORDER BY data DESC"
+        );
         $sql->bindValue(':id', $id);
 
         $mensagensResponse = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -46,7 +69,17 @@ class MensagemDao
 
             foreach ($mensagensResponse as $msg) {
                 $mensagem = new Mensagem();
-                $mensagem->setMensagem($msg['id'], $msg['email_destinatario'], $msg['destinatario'], $msg['data'], $msg['conteudo'], $msg['titulo'], $msg['assunto']);
+                $mensagem->setMensagem(
+                    $msg['id'],
+                    $msg['remetente_email'],
+                    $msg['remetente_nome'],
+                    $msg['destinatario_email'],
+                    $msg['destinatario_nome'],
+                    $msg['data'],
+                    $msg['conteudo'],
+                    $msg['titulo'],
+                    $msg['assunto']
+                );
                 $mensagens[] = $mensagem;
             }
         }
@@ -54,26 +87,12 @@ class MensagemDao
         return $mensagens;
     }
 
-    public function obterMensagemPorId($id)
-    {
-        $sql = $this->con->prepare("SELECT *, (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as email_remetente FROM mensagem WHERE id = :id");
-        $sql->bindValue(':id', $id);
-        $sql->execute();
-
-        $msg = $sql->fetch(PDO::FETCH_ASSOC);
-
-        if ($msg) {
-            $mensagem = new Mensagem();
-            $mensagem->setMensagem($msg['id'], $msg['email_remetente'], $msg['destinatario'], $msg['data'], $msg['conteudo'], $msg['titulo'], $msg['assunto']);
-            return $mensagem;
-        }
-
-        return null;
-    }
-
     public function enviarMensagem($mensagem)
     {
-        $sql = $this->con->prepare("INSERT INTO mensagem (remetente, destinatario, conteudo, titulo, assunto, data) VALUES (:id, :destinatario_id, :conteudo, :titulo, :assunto, :data)");
+        $id_mensagem = $this->gerarGUID();
+
+        $sql = $this->con->prepare("INSERT INTO mensagem (id, remetente, destinatario, conteudo, titulo, assunto, data) VALUES (:id_mensagem, :id, :destinatario_id, :conteudo, :titulo, :assunto, :data)");
+        $sql->bindValue(':id_mensagem', $id_mensagem);
         $sql->bindValue(':id', $mensagem->remetente);
         $sql->bindValue(':destinatario_id', $mensagem->destinatario);
         $sql->bindValue(':conteudo', $mensagem->conteudo);
@@ -81,6 +100,8 @@ class MensagemDao
         $sql->bindValue(':assunto', $mensagem->assunto);
         $sql->bindValue(':data', $mensagem->data);
         $sql->execute();
+
+        return $id_mensagem;
     }
 
     public function excluirMensagem($id)
@@ -88,5 +109,19 @@ class MensagemDao
         $sql = $this->con->prepare("DELETE FROM mensagem WHERE id = :id");
         $sql->bindValue(':id', $id);
         $sql->execute();
+    }
+    private function gerarGUID()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff)
+        );
     }
 }

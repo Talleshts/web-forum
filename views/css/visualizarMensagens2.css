@@ -29,6 +29,12 @@ body {
   box-shadow: none;
 }
 
+.panel-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
 .list-message .list-group-item {
   padding: 15px;
   color: #999;
@@ -63,4 +69,11 @@ body {
 
 .list-group-item-heading {
   color: #333;
+}
+
+.img-ajustada {
+  max-width: 30%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }

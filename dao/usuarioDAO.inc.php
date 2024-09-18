@@ -14,21 +14,22 @@ class UsuarioDao
 
     public function cadastrarUsuario($email, $nome, $senha)
     {
-        $cadastroRealizado = false;
+        $id_usuario = null;
+        $id_usuario = $this->gerarGUID();
 
         $sqlVerificaEmail = $this->con->prepare("SELECT * FROM usuario WHERE email =:email");
         $sqlVerificaEmail->bindValue(':email', $email);
         $sqlVerificaEmail->execute();
         if ($sqlVerificaEmail->rowCount() == 0) {
-            $sql = $this->con->prepare("INSERT INTO usuario (email, login, nome, senha) VALUES (:email, :email, :nome, :senha)");
+            $sql = $this->con->prepare("INSERT INTO usuario (idUsuario,email, login, nome, senha) VALUES (:id, :email, :email, :nome, :senha)");
+            $sql->bindValue(':id', $id_usuario);
             $sql->bindValue(':email', $email);
             $sql->bindValue(':nome', $nome);
             $sql->bindValue(':senha', $senha);
             $sql->execute();
-            $cadastroRealizado = true;
         }
 
-        return $cadastroRealizado;
+        return $id_usuario;
     }
 
     public function autenticarUsuario($email, $senha)
@@ -73,5 +74,20 @@ class UsuarioDao
         $sql = $this->con->prepare("DELETE FROM clientes WHERE id =:id");
         $sql->bindValue(':id', $id);
         $sql->execute();
+    }
+
+    private function gerarGUID()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff)
+        );
     }
 }

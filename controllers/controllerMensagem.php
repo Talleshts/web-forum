@@ -33,7 +33,11 @@ switch ($opcao) {
         $mensagem->criarMensagem($remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);
 
         $mensagemDao = new MensagemDao();
-        $mensagemDao->enviarMensagem($mensagem);
+        $id_mensagem = $mensagemDao->enviarMensagem($mensagem);
+
+        if ($_FILES['pImagem']['size'] > 0) {
+            uploadImagemMensagem($id_mensagem);
+        }
 
         session_start();
         $_SESSION['mensagemEnviada'] = true;
@@ -52,4 +56,25 @@ switch ($opcao) {
         header('Location: controllerMensagem.php?pOpcao=1');
 
         break;
+}
+
+function uploadImagemMensagem($id)
+{
+    $imagem = $_FILES['pImagem'];
+    $nome = $id . '.jpg';
+    $caminho = '../views/images/mensagens/' . $nome;
+
+    if ($imagem != null) {
+        $nome_temporario = $_FILES['pImagem']['tmp_name'];
+        copy($nome_temporario, $caminho);
+    }
+}
+
+function obterFotoMensagem($id)
+{
+    $arquivo = '../images/mensagens/' . $id . '.jpg';
+
+    if (file_exists($arquivo)) {
+        return $arquivo;
+    }
 }
