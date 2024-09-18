@@ -7,9 +7,7 @@ function toggleSubmitButton() {
 
     if (destinatarioSelect.value === "0") {
         submitButton.disabled = true;
-        console.log("Aqui");
     } else {
-        console.log("Acola");
         submitButton.disabled = false;
     }
 }

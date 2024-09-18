@@ -32,6 +32,7 @@ if (isset($_GET['mensagemId'])) {
     foreach ($mensagens as $mensagem) {
         if ($mensagem->id == $_GET['mensagemId']) {
             $mensagemSelecionada = $mensagem;
+            $_SESSION['mensagemSelecionada'] = $mensagemSelecionada;
             break;
         }
     }
@@ -90,6 +91,13 @@ if (isset($_GET['mensagemId'])) {
                         <h4><?= htmlspecialchars($mensagemSelecionada->titulo) ?></h4>
                         <p><?= htmlspecialchars($mensagemSelecionada->conteudo) ?></p>
                         <img src="images/mensagens/<?= $mensagemSelecionada->id ?>.jpg" alt="img" class="img-ajustada">
+                        <?php
+                        if (isset($mensagemSelecionada)) {
+                            include 'modalEscreverMensagem.php';
+                        } else {
+                            echo 'Mensagem não encontrada!';
+                        }
+                        ?>
                     <?php } ?>
                 </div>
             </div>
