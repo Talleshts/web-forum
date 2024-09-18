@@ -18,7 +18,7 @@ switch ($opcao) {
         $mensagens = $mensagemDao->obterTodasMensagensRecebidas($_SESSION['usuarioLogado']->id);
         $_SESSION['mensagens'] = $mensagens;
 
-        header('Location: ../views/visualizarMensagens2.php');
+        header('Location: ../views/visualizarMensagens.php');
         break;
 
     case 2:
@@ -28,6 +28,7 @@ switch ($opcao) {
         $conteudo = $_REQUEST['pCorpo'];
         $assunto = $_REQUEST['pAssunto'];
         $titulo = $_REQUEST['pTitulo'];
+
 
         $mensagem = new Mensagem();
         $mensagem->criarMensagem($remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);

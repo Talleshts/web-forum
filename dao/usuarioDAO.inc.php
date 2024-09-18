@@ -45,7 +45,7 @@ class UsuarioDao
 
             if ($senha == $usuarioResponse['senha']) {
                 $usuario = new Usuario();
-                $usuario->setUsuario($usuarioResponse['idUsuario'], $usuarioResponse['email'], $usuarioResponse['nome']);
+                $usuario->setUsuarioComSenha($usuarioResponse['idUsuario'], $usuarioResponse['email'], $usuarioResponse['nome'], $usuarioResponse['senha']);
                 return $usuario;
             }
         }
@@ -74,6 +74,23 @@ class UsuarioDao
         $sql = $this->con->prepare("DELETE FROM clientes WHERE id =:id");
         $sql->bindValue(':id', $id);
         $sql->execute();
+    }
+
+    public function recuperarSenha($email)
+    {
+        $sql = $this->con->prepare("SELECT * FROM usuario WHERE email = :email");
+        $sql->bindValue(':email', $email);
+        $sql->execute();
+
+        $usuario = null;
+
+        if ($sql->rowCount() == 1) {
+            $usuarioResponse = $sql->fetch(PDO::FETCH_ASSOC);
+            $usuario = new Usuario();
+            $usuario->setUsuarioComSenha($usuarioResponse['idUsuario'], $usuarioResponse['email'], $usuarioResponse['nome'], $usuarioResponse['senha']);
+        }
+
+        return $usuario;
     }
 
     private function gerarGUID()

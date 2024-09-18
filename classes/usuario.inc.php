@@ -27,6 +27,14 @@ class Usuario
         $this->nome = $nome;
     }
 
+    function setUsuarioComSenha($id, $email, $nome, $senha)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->nome = $nome;
+        $this->senha = $senha;
+    }
+
     function __get($atributo)
     {
         return $this->$atributo;

@@ -2,6 +2,8 @@
 
 require_once '../dao/usuarioDAO.inc.php';
 
+session_start();
+
 $opcao = $_REQUEST['pOpcao'];
 
 switch ($opcao) {
@@ -13,7 +15,6 @@ switch ($opcao) {
         $usuarioDao = new UsuarioDao();
         $usuario = $usuarioDao->autenticarUsuario($email, $senha);
 
-        session_start();
         if ($usuario == null) {
             $_SESSION['loginErro'] = true;
             header('Location: ../views/login.php');
@@ -35,19 +36,31 @@ switch ($opcao) {
             uploadImagemCadastro($id_usuario);
             header('Location: ../views/login.php');
         } else {
-            session_start();
             $_SESSION['cadastroErro'] = true;
             header('Location: ../views/cadastro.php');
         }
-
-        header('Location: ../views/login.php');
         break;
-
     case 3:
         // sair
-        session_start();
         session_destroy();
         header('Location: ../views/index.php');
+        break;
+    case 4:
+        // recuperar senha
+        $email = $_REQUEST['pEmail'];
+
+        $usuarioDao = new UsuarioDao();
+        $usuario = $usuarioDao->recuperarSenha($email);
+
+        if ($usuario != null) {
+            $senha = $usuario->senha;
+            $nome = $usuario->nome;
+            $_SESSION['mensagem'] = "Olá, $nome! Sua senha é: $senha";
+        } else {
+            $_SESSION['mensagem'] = 'Email não encontrado. Tente novamente.';
+        }
+
+        header('Location: ../views/login.php');
         break;
 }
 

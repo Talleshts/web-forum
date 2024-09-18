@@ -1,29 +1,89 @@
-section {
+body {
+  margin-top: 20px;
+  background: #eee;
+  overflow: hidden;
+}
+
+.panel-title {
   display: flex;
   justify-content: center;
+  padding-top: 1rem;
 }
 
-.mensagem-list {
-  float: left;
-  width: 30%;
-  padding: 10px;
+.message-wrapper {
+  padding: 0px;
+  background-color: #ffffff;
 }
 
-.mensagem-conteudo {
-  float: left;
-  width: 70%;
-  padding: 10px;
+.message-sideleft {
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
-.mensagem {
-  cursor: pointer;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f2f2f2;
+.message-sideright {
+  background-color: #f8f8f8;
+  padding: 30px;
+  overflow-y: auto;
+  max-height: 80vh;
+  min-height: 70vh;
 }
 
-.mensagem img {
+.panel {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.panel-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.list-message {
+  max-height: 70vh;
+  min-height: 70vh;
+  overflow-y: auto;
+}
+
+.list-message .list-group-item {
+  padding: 15px;
+  color: #999;
+  border-right: 3px solid #8cc152;
+}
+
+.list-group-item-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.list-message .list-group-item.active {
+  background-color: #eee;
+}
+
+.avatar {
   width: 50px;
   height: 50px;
-  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.panel-heading .media {
+  display: flex;
+  align-items: center;
+}
+
+.panel-body {
+  padding-top: 20px;
+  word-wrap: break-word;
+}
+
+.list-group-item-heading {
+  color: #333;
+}
+
+.img-ajustada {
+  max-width: 30%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }

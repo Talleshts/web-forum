@@ -27,7 +27,8 @@ h1 {
 input[type="text"],
 input[type="password"],
 input[type="submit"],
-input[type="email"] {
+input[type="email"],
+input[type="file"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -47,7 +48,55 @@ input[type="submit"]:hover {
   background-color: #45a049;
 }
 
+.file-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.file-input:hover {
+  border-color: darkorange;
+}
+
+.file-input::file-selector-button {
+  background-color: darkorange;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.file-input::file-selector-button:hover {
+  transition: background-color 0.3s ease;
+  background-color: darkorange;
+  color: #fff;
+}
+
+.styled-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
 button {
+  font-weight: bold;
+  padding: 10px;
+  background-color: #fff;
+  color: orange;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button a {
   font-weight: bold;
   padding: 10px;
   background-color: #fff;
@@ -73,7 +122,7 @@ button:hover {
   overflow: hidden;
   white-space: nowrap;
   transition: width 0.4s ease;
-  width: 30px;
+  width: 3rem;
 }
 
 .back-button {

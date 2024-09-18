@@ -39,7 +39,7 @@
     document.getElementById('closeModalBtn').addEventListener('click', function() {
         var loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
         loadingModal.hide();
-        window.location.href = 'visualizarMensagens2.php'; // Redirecionar para a página desejada
+        window.location.href = 'visualizarMensagens.php'; // Redirecionar para a página desejada
     });
 </script>
 

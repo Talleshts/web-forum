@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/09/2024 às 16:05
+-- Tempo de geração: 18/09/2024 às 03:26
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -28,40 +28,26 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `conversa` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `titulo` varchar(128) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `data_criacao` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Estrutura para tabela `mensagem`
 --
 
 CREATE TABLE `mensagem` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` varchar(36) NOT NULL,
   `assunto` varchar(128) DEFAULT NULL,
   `titulo` char(128) NOT NULL,
   `conteudo` text DEFAULT NULL,
   `remetente` int(10) UNSIGNED NOT NULL,
   `destinatario` int(10) UNSIGNED NOT NULL,
   `data` datetime NOT NULL,
-  `conversa_id` int(10) UNSIGNED NOT NULL
+  `id_conversa` varchar(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Despejando dados para a tabela `conversa`
---
-
-INSERT INTO `conversa` (`id`, `titulo`, `data_criacao`) VALUES
-(1, 'Conversa 1', '2024-09-15 22:46:15');
-
---
--- Despejando dados para a tabela `mensagem`
---
-
-INSERT INTO `mensagem` (`id`, `assunto`, `titulo`, `conteudo`, `remetente`, `destinatario`, `data`, `conversa_id`) VALUES
-(9, 'Primeiro email', 'Teste', 'Vasco da Gama', 1, 2, '2024-09-15 22:46:15', 1),
-(12, 'Teste livro', 'Mensagem para mim', 'Mensagem', 1, 1, '2024-09-16 15:21:31', 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +69,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`idUsuario`, `nome`, `email`, `login`, `senha`) VALUES
 (1, 'Teste', 'teste@mail.com', 'teste@mail.co', '1234'),
-(2, 'usuario2', 'usuario2@mail.com', 'usuario2@mail', '1234');
+(2, 'usuario2', 'usuario2@mail.com', 'usuario2@mail', '1234'),
+(76, 'JC', 'vocevaidormir@mail.com', 'vocevaidormir', '1234');
 
 --
 -- Índices para tabelas despejadas
@@ -102,7 +89,7 @@ ALTER TABLE `mensagem`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_mensagem_id_rem` (`remetente`),
   ADD KEY `fk_mensagem_id_dest` (`destinatario`),
-  ADD KEY `fk_mensagem_conversa_id` (`conversa_id`);
+  ADD KEY `fk_conversa_id_rem` (`id_conversa`);
 
 --
 -- Índices de tabela `usuario`
@@ -115,22 +102,10 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de tabela `conversa`
---
-ALTER TABLE `conversa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `mensagem`
---
-ALTER TABLE `mensagem`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idUsuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- Restrições para tabelas despejadas
@@ -140,9 +115,9 @@ ALTER TABLE `usuario`
 -- Restrições para tabelas `mensagem`
 --
 ALTER TABLE `mensagem`
+  ADD CONSTRAINT `fk_conversa_id_rem` FOREIGN KEY (`id_conversa`) REFERENCES `conversa` (`id`),
   ADD CONSTRAINT `fk_mensagem_id_dest` FOREIGN KEY (`destinatario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `fk_mensagem_id_rem` FOREIGN KEY (`remetente`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `fk_mensagem_conversa_id` FOREIGN KEY (`conversa_id`) REFERENCES `conversa` (`id`);
+  ADD CONSTRAINT `fk_mensagem_id_rem` FOREIGN KEY (`remetente`) REFERENCES `usuario` (`idUsuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

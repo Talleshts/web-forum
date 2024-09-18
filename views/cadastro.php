@@ -38,8 +38,8 @@
             <input type="email" name="pEmail" placeholder="Email" required>
             <input type="password" name="pSenha" placeholder="Senha" required>
             <input type="password" name="pConfirmar_senha" placeholder="Confirmar Senha" required>
-            <label for="pImagem" class="form-label">Foto de Perfil:</label>
-            <input type="file" class="form-control" name="pImagem">
+            <label for="pImagem" class="form-label styled-label">Foto de Perfil:</label>
+            <input type="file" class="form-control file-input" name="pImagem">
 
             <?php
             session_start();
@@ -52,9 +52,7 @@
             <input type="hidden" value="2" name="pOpcao">
         </form>
         <div class="button-container">
-            <center>
-                <button onclick="window.location.href='login.php'">Fazer Login</button>
-            </center>
+            <button onclick="window.location.href='login.php'">Fazer Login</button>
         </div>
     </section>
 </body>
