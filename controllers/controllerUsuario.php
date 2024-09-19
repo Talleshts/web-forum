@@ -33,7 +33,9 @@ switch ($opcao) {
         $id_usuario = $usuarioDao->cadastrarUsuario($email, $nome, $senha);
 
         if ($id_usuario != null) {
-            uploadImagemCadastro($id_usuario);
+            if ($_FILES['pImagem']['size'] > 0) {
+                uploadImagemCadastro($id_usuario);
+            }
             header('Location: ../views/login.php');
         } else {
             $_SESSION['cadastroErro'] = true;
@@ -62,18 +64,42 @@ switch ($opcao) {
 
         header('Location: ../views/login.php');
         break;
+
+    case 5:
+        // atualizar dados
+        $id = $_SESSION['usuarioLogado']->id;
+        $nome = $_REQUEST['pNome'];
+        $senha = $_REQUEST['pSenha'];
+
+        $usuarioDao = new UsuarioDao();
+        $usuario = $usuarioDao->atualizarUsuario($id, $nome, $senha);
+        $_SESSION['usuarioLogado'] = $usuario;
+
+        if ($_FILES['pImagem']['size'] > 0) {
+            uploadImagemCadastro($id);
+        }
+        header('Location: controllerMensagem.php?pOpcao=1');
+
+        break;
+
+    case 6:
+        // excluir foto perfil
+        $id = $_SESSION['usuarioLogado']->id;
+        excluirImagem($id);
+        header('Location: controllerMensagem.php?pOpcao=1');
+        break;
+
+    default:
+        break;
 }
 
 function uploadImagemCadastro($id)
 {
-    $imagem = $_FILES['pImagem'];
     $nome = $id . '.jpg';
     $caminho = '../views/images/perfil/' . $nome;
 
-    if ($imagem != null) {
-        $nome_temporario = $_FILES['pImagem']['tmp_name'];
-        copy($nome_temporario, $caminho);
-    }
+    $nome_temporario = $_FILES['pImagem']['tmp_name'];
+    copy($nome_temporario, $caminho);
 }
 
 function excluirImagem($id)

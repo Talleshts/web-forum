@@ -2,8 +2,8 @@
 require_once '../classes/usuario.inc.php';
 require_once '../classes/mensagem.inc.php';
 require_once '../dao/mensagemDao.inc.php';
-require_once 'includes/cabecalho.inc.php';
 require_once 'includes/carregamento-sucesso.inc.php';
+require_once 'includes/cabecalho.inc.php';
 
 
 $mensagens = $_SESSION['mensagens'] ?? [];
@@ -46,7 +46,13 @@ if (isset($_GET['mensagemId'])) {
         <div class="col-md-4 message-sideleft">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Mensagens</h3>
+                    <?php
+                    if (isset($_SESSION['enviadas'])) {
+                        echo '<h3 class="panel-title">Enviadas</h3>';
+                    } else {
+                        echo '<h3 class="panel-title">Recebidas</h3>';
+                    }
+                    ?>
                 </div>
                 <div class="panel-body no-padding">
                     <div class="list-group no-margin list-message">
@@ -54,11 +60,24 @@ if (isset($_GET['mensagemId'])) {
                         foreach ($mensagens as $mensagem) {
                         ?>
                             <a href="visualizarMensagens.php?mensagemId=<?= $mensagem->id ?>" class="list-group-item d-flex align-items-center">
-                                <img src="./images/mensagens/<?= $mensagem->id ?>.jpg" alt="Avatar" class="img-circle avatar" style="width: 50px; height: 50px; object-fit: cover; margin-right: 15px; border-radius: 50%;">
+                                <img src="<?php
+                                            $arquivo = './images/perfil/' . $mensagem->id . '.jpg';
 
-                                <!-- Conteúdo da mensagem -->
+                                            if (file_exists($arquivo)) {
+                                                echo $arquivo;
+                                            } else {
+                                                echo './images/perfil/avatar.png';
+                                            }
+                                            ?>" alt="Avatar" class="img-circle avatar img-profile">
+
                                 <div>
-                                    <h4 class="list-group-item-heading"><?= $mensagem->remetente_email ?></h4>
+                                    <?php
+                                    if (isset($_SESSION['enviadas'])) {
+                                        echo '<h4 class="list-group-item-heading">' . $mensagem->destinatario_email . '</h4>';
+                                    } else {
+                                        echo '<h4 class="list-group-item-heading">' . $mensagem->remetente_email . '</h4>';
+                                    }
+                                    ?>
                                     <p class="list-group-item-text"><strong><?= $mensagem->assunto ?></strong></p>
                                 </div>
                             </a>
@@ -73,14 +92,27 @@ if (isset($_GET['mensagemId'])) {
             <div class="panel">
                 <div class="panel-heading">
                     <?php if (isset($mensagemSelecionada)) { ?>
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Avatar" class="img-circle avatar">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><?= htmlspecialchars($mensagemSelecionada->remetente_nome) ?></h4>
-                                <small><?= htmlspecialchars($mensagemSelecionada->data) ?></small>
+                        <div class="head-msg">
+                            <div class="media">
+                                <a class="pull-left" href="#">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Avatar" class="img-circle avatar">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><?= htmlspecialchars($mensagemSelecionada->remetente_nome) ?></h4>
+                                    <small><?= htmlspecialchars($mensagemSelecionada->data) ?></small>
+                                </div>
                             </div>
+                            <?php
+                            if (!isset($_SESSION['enviadas'])) {
+                            ?>
+                                <div>
+                                    <a href="#" title="Excluir mensagem">
+                                        <a class="fa fa-trash link-button" href="../controllers/controllerMensagem.php?pOpcao=2&id=<?= $mensagemSelecionada->id ?>"></a>
+                                    </a>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     <?php } else { ?>
                         <p>Nenhuma mensagem selecionada.</p>
@@ -90,14 +122,14 @@ if (isset($_GET['mensagemId'])) {
                     <?php if (isset($mensagemSelecionada)) { ?>
                         <h4><?= htmlspecialchars($mensagemSelecionada->titulo) ?></h4>
                         <p><?= htmlspecialchars($mensagemSelecionada->conteudo) ?></p>
-                        <img src="images/mensagens/<?= $mensagemSelecionada->id ?>.jpg" alt="img" class="img-ajustada">
                         <?php
-                        if (isset($mensagemSelecionada)) {
-                            include 'modalEscreverMensagem.php';
-                        } else {
-                            echo 'Mensagem não encontrada!';
+                        $arquivo = './images/mensagens/' . $mensagemSelecionada->id . '.jpg';
+
+                        if (file_exists($arquivo)) {
+                            echo '<img src="' . $arquivo . '" alt="img" class="img-ajustada">';
                         }
                         ?>
+
                     <?php } ?>
                 </div>
             </div>

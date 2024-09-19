@@ -1,7 +1,9 @@
 body {
   margin-top: 20px;
   background: #eee;
-  overflow: hidden;
+  /* Remover ou ajustar o overflow */
+  overflow-x: hidden;
+  /* Isso evita o scroll horizontal, mantendo o vertical */
 }
 
 .panel-title {
@@ -81,4 +83,24 @@ body {
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+.head-msg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link-button {
+  text-decoration: none;
+  font-size: 24px;
+  color: #e74c3c;
+}
+
+.img-profile {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 50%;
 }

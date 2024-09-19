@@ -17,6 +17,7 @@ switch ($opcao) {
         $mensagemDao = new MensagemDao();
         $mensagens = $mensagemDao->obterTodasMensagensRecebidas($_SESSION['usuarioLogado']->id);
         $_SESSION['mensagens'] = $mensagens;
+        unset($_SESSION['enviadas']);
 
         header('Location: ../views/visualizarMensagens.php');
         break;
@@ -31,23 +32,9 @@ switch ($opcao) {
 
 
         $mensagem = new Mensagem();
-        $mensagem->criarMensagem($id_conversa, $remetente_id, $destinatario_id, $conteudo, $titulo, $assunto);
+        $mensagem->criarMensagem($remetente_id, $destinatario_id, $conteudo, $titulo, $assunto);
 
         $mensagemDao = new MensagemDao();
-
-        $id_conversa = null;
-
-        if (isset($_REQUEST['pConversa'])) {
-            $id_conversa = $_REQUEST['pConversa'];
-        } else {
-            $id_conversa = $mensagemDao->criarConversa();
-        }
-
-        echo '<alert>id_conversa: ' . $id_conversa . '</alert>';
-
-        $mensagem = new Mensagem();
-        $mensagem->criarMensagem($id_conversa, $remetente_id, $destinatario_id, $conteudo, $assunto, $titulo);
-
         $id_mensagem = $mensagemDao->enviarMensagem($mensagem);
 
         if ($_FILES['pImagem']['size'] > 0) {
@@ -72,6 +59,19 @@ switch ($opcao) {
 
         break;
 
+    case 4:
+        $usuarioDao = new UsuarioDao();
+        $usuarios = $usuarioDao->obterTodosUsuarios();
+        session_start();
+        $_SESSION['usuarios'] = $usuarios;
+
+        $mensagemDao = new MensagemDao();
+        $mensagens = $mensagemDao->obterTodasMensagensEnviadas($_SESSION['usuarioLogado']->id);
+        $_SESSION['mensagens'] = $mensagens;
+        $_SESSION['enviadas'] = true;
+
+        header('Location: ../views/visualizarMensagens.php');
+        break;
     default:
         break;
 }
@@ -94,5 +94,16 @@ function obterFotoMensagem($id)
 
     if (file_exists($arquivo)) {
         return $arquivo;
+    }
+}
+
+function obterFotoPerfil($id)
+{
+    $arquivo = '../images/perfil/' . $id . '.jpg';
+
+    if (file_exists($arquivo)) {
+        return $arquivo;
+    } else {
+        return '../images/perfil/avatar.jpg';
     }
 }

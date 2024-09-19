@@ -33,7 +33,6 @@ class MensagemDao
                 $mensagem = new Mensagem();
                 $mensagem->setMensagem(
                     $msg['id'],
-                    $msg['id_conversa'],
                     $msg['remetente'],
                     $msg['remetente_email'],
                     $msg['remetente_nome'],
@@ -59,9 +58,10 @@ class MensagemDao
             (SELECT nome FROM usuario WHERE usuario.idUsuario = mensagem.destinatario) as destinatario_nome,
             (SELECT email FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as remetente_email,
             (SELECT nome FROM usuario WHERE usuario.idUsuario = mensagem.remetente) as remetente_nome 
-            FROM mensagem WHERE remetente =:id ORDER BY data DESC"
+            FROM mensagem WHERE remetente LIKE :id ORDER BY data DESC"
         );
         $sql->bindValue(':id', $id);
+        $sql->execute();
 
         $mensagensResponse = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -73,7 +73,6 @@ class MensagemDao
                 $mensagem = new Mensagem();
                 $mensagem->setMensagem(
                     $msg['id'],
-                    $msg['id_conversa'],
                     $msg['remetente'],
                     $msg['remetente_email'],
                     $msg['remetente_nome'],
@@ -92,24 +91,12 @@ class MensagemDao
         return $mensagens;
     }
 
-    public function criarConversa()
-    {
-        $id = $this->gerarGUID();
-
-        $sql = $this->con->prepare("INSERT INTO conversa (id) VALUES (:id)");
-        $sql->bindValue(':id', $id);
-        $sql->execute();
-
-        return $id;
-    }
-
     public function enviarMensagem($mensagem)
     {
         $id_mensagem = $this->gerarGUID();
 
-        $sql = $this->con->prepare("INSERT INTO mensagem (id, id_conversa, remetente, destinatario, conteudo, titulo, assunto, data) VALUES (:id_mensagem, :id_conversa, :id, :destinatario_id, :conteudo, :titulo, :assunto, :data)");
+        $sql = $this->con->prepare("INSERT INTO mensagem (id, remetente, destinatario, conteudo, titulo, assunto, data) VALUES (:id_mensagem, :id, :destinatario_id, :conteudo, :titulo, :assunto, :data)");
         $sql->bindValue(':id_mensagem', $id_mensagem);
-        $sql->bindValue(':id_conversa', $mensagem->id_conversa);
         $sql->bindValue(':id', $mensagem->remetente_id);
         $sql->bindValue(':destinatario_id', $mensagem->destinatario_id);
         $sql->bindValue(':conteudo', $mensagem->conteudo);

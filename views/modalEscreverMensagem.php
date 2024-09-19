@@ -22,17 +22,11 @@ if (isset($_SESSION['mensagemSelecionada'])) {
                         <label for="usuarios" class="form-label">Destinatários:</label>
                         <!-- fazer select com pesquisa de usuários -->
                         <select name="pDestinatario" id="pDestinatario" class="form-select" onchange="toggleSubmitButton()">
+                            <option value="0" selected>Selecione um destinatário</option>
                             <?php
-                            if ($msg_selecionada != null) {
-                                echo '<option value="' . $msg_selecionada->remetente_id . "' title='" . $msg_selecionada->remetente_email . '" selected disabled>' . $msg_selecionada->remetente_nome . '</option>';
-                            } else {
-                            ?>
-                                <option value="0" selected>Selecione um destinatário</option>
-                            <?php
-                                foreach ($usuarios as $usuario) {
-                                    // fazer aparecer o email abaixo do nome do usuario
-                                    echo "<option value='" . $usuario->id . "' title='" . $usuario->email . "'>" . $usuario->nome . " selected</option>";
-                                }
+                            foreach ($usuarios as $usuario) {
+                                // fazer aparecer o email abaixo do nome do usuario
+                                echo "<option value='" . $usuario->id . "' title='" . $usuario->email . "'>" . $usuario->nome . "</option>";
                             }
                             ?>
                         </select>
@@ -53,7 +47,7 @@ if (isset($_SESSION['mensagemSelecionada'])) {
                         <textarea name="pCorpo" class="form-control" rows="5" maxlength="5000"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="pImagem" class="form-label">Foto: <?= $msg_selecionada->remetente_id ?></label>
+                        <label for="pImagem" class="form-label">Foto:</label>
                         <input type="file" class="form-control" name="pImagem">
                     </div>
                     <div class="modal-footer">
@@ -65,11 +59,6 @@ if (isset($_SESSION['mensagemSelecionada'])) {
                     </div>
                     <input type="hidden" name="pOpcao" value="2">
                     <input type="hidden" name="pRemetente" value="<?= $_SESSION['usuarioLogado']->id; ?>">
-                    <?php
-                    if ($msg_selecionada != null) {
-                        echo '<input type="hidden" name="pConversa" value="' . $msg_selecionada->id_conversa . '">';
-                    }
-                    ?>
                 </form>
             </div>
         </div>

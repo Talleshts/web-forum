@@ -93,6 +93,26 @@ class UsuarioDao
         return $usuario;
     }
 
+    public function atualizarUsuario($id, $nome, $senha)
+    {
+        $sql = $this->con->prepare("UPDATE usuario SET nome = :nome, senha = :senha WHERE idUsuario = :id");
+        $sql->bindValue(':id', $id);
+        $sql->bindValue(':nome', $nome);
+        $sql->bindValue(':senha', $senha);
+        $sql->execute();
+
+        $sql = $this->con->prepare("SELECT * FROM usuario WHERE idUsuario = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        $usuarioResponse = $sql->fetch(PDO::FETCH_ASSOC);
+
+        $usuario = new Usuario();
+        $usuario->setUsuarioComSenha($usuarioResponse['idUsuario'], $usuarioResponse['email'], $nome, $usuarioResponse['senha']);
+
+        return $usuario;
+    }
+
     private function gerarGUID()
     {
         return sprintf(
