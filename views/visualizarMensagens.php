@@ -61,7 +61,7 @@ if (isset($_GET['mensagemId'])) {
                         ?>
                             <a href="visualizarMensagens.php?mensagemId=<?= $mensagem->id ?>" class="list-group-item d-flex align-items-center">
                                 <img src="<?php
-                                            $arquivo = './images/perfil/' . $mensagem->id . '.jpg';
+                                            $arquivo = './images/perfil/' . $mensagem->remetente_id . '.jpg';
 
                                             if (file_exists($arquivo)) {
                                                 echo $arquivo;
@@ -89,9 +89,9 @@ if (isset($_GET['mensagemId'])) {
             </div>
         </div>
         <div class="col-md-8 message-sideright">
-            <div class="panel">
-                <div class="panel-heading">
-                    <?php if (isset($mensagemSelecionada)) { ?>
+            <?php if (isset($mensagemSelecionada)) { ?>
+                <div class="panel">
+                    <div class="panel-heading">
                         <div class="head-msg">
                             <div class="media">
                                 <a class="pull-left" href="#">
@@ -107,19 +107,15 @@ if (isset($_GET['mensagemId'])) {
                             ?>
                                 <div>
                                     <a href="#" title="Excluir mensagem">
-                                        <a class="fa fa-trash link-button" href="../controllers/controllerMensagem.php?pOpcao=2&id=<?= $mensagemSelecionada->id ?>"></a>
+                                        <a class="fa fa-trash link-button" href="../controllers/controllerMensagem.php?pOpcao=3&pId=<?= $mensagemSelecionada->id ?>"></a>
                                     </a>
                                 </div>
                             <?php
                             }
                             ?>
                         </div>
-                    <?php } else { ?>
-                        <p>Nenhuma mensagem selecionada.</p>
-                    <?php } ?>
-                </div>
-                <div class="panel-body">
-                    <?php if (isset($mensagemSelecionada)) { ?>
+                    </div>
+                    <div class="panel-body">
                         <h4><?= htmlspecialchars($mensagemSelecionada->titulo) ?></h4>
                         <p><?= htmlspecialchars($mensagemSelecionada->conteudo) ?></p>
                         <?php
@@ -130,9 +126,11 @@ if (isset($_GET['mensagemId'])) {
                         }
                         ?>
 
-                    <?php } ?>
+                    </div>
                 </div>
-            </div>
+            <?php } else { ?>
+                <img src="./assets/logo-semfundo.png" alt="Imagem" class="img-background">
+            <?php } ?>
         </div>
     </div>
 </div>

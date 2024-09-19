@@ -104,3 +104,11 @@ body {
   margin-right: 15px;
   border-radius: 50%;
 }
+
+.img-background {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin: 1px red solid;
+}
