@@ -1,10 +1,6 @@
-<!-- Modal -->
-<!-- Button trigger modal -->
-
-<!-- ajustar o botão com o icone -->
-
+<!-- Botão de excluir -->
 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModalExcluir">
-    <img src="../images/icons/lixo.png" alt="Excluir" width="10" height="10">
+    <img src="../assets/icons/lixo.png" alt="Excluir" width="10" height="10">
 </button>
 
 <!-- Modal -->
@@ -19,7 +15,6 @@
                 Você deseja realmente excluir a mensagem?
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-primary">Sim</button> -->
                 <a class='btn btn-primary me-2' role='button' href='../controllers/controllerMensagem.php?pOpcao=3&pId=<?= $mensagem->id ?>'>Sim</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
             </div>

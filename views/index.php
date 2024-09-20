@@ -10,7 +10,7 @@
 <body>
     <section class="container">
         <div class="imagem">
-            <img src="assets/divulgação_promocional.png" alt="Duas mulheres conversando de frente para outra e o notebook ao lado">
+            <img src="assets/images/divulgação_promocional.png" alt="Duas mulheres conversando de frente para outra e o notebook ao lado">
         </div>
         <div class="apresentacao">
             <h1>Seja Bem Vindo ao FiTa Web Forum</h1>

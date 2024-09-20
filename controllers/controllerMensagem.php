@@ -80,7 +80,7 @@ function uploadImagemMensagem($id)
 {
     $imagem = $_FILES['pImagem'];
     $nome = $id . '.jpg';
-    $caminho = '../views/images/mensagens/' . $nome;
+    $caminho = '../views/assets/mensagens/' . $nome;
 
     if ($imagem != null) {
         $nome_temporario = $_FILES['pImagem']['tmp_name'];
@@ -90,7 +90,7 @@ function uploadImagemMensagem($id)
 
 function obterFotoMensagem($id)
 {
-    $arquivo = '../images/mensagens/' . $id . '.jpg';
+    $arquivo = '../assets/mensagens/' . $id . '.jpg';
 
     if (file_exists($arquivo)) {
         return $arquivo;
@@ -99,11 +99,11 @@ function obterFotoMensagem($id)
 
 function obterFotoPerfil($id)
 {
-    $arquivo = '../images/perfil/' . $id . '.jpg';
+    $arquivo = '../assets/perfil/' . $id . '.jpg';
 
     if (file_exists($arquivo)) {
         return $arquivo;
     } else {
-        return '../images/perfil/avatar.jpg';
+        return '../assets/perfil/avatar.jpg';
     }
 }

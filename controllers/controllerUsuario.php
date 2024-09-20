@@ -99,7 +99,7 @@ switch ($opcao) {
 function uploadImagemCadastro($id)
 {
     $nome = $id . '.jpg';
-    $caminho = '../views/images/perfil/' . $nome;
+    $caminho = '../views/assets/perfil/' . $nome;
 
     $nome_temporario = $_FILES['pImagem']['tmp_name'];
     copy($nome_temporario, $caminho);
@@ -108,7 +108,7 @@ function uploadImagemCadastro($id)
 function excluirImagem($id)
 {
     $nome = $id . '.jpg';
-    $caminho = '../views/images/perfil/' . $nome;
+    $caminho = '../views/assets/perfil/' . $nome;
     if (file_exists($caminho)) {
         unlink($caminho);
     }

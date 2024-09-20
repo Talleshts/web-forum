@@ -63,12 +63,12 @@ if (isset($_GET['mensagemId'])) {
                         ?>
                             <a href="visualizarMensagens.php?mensagemId=<?= $mensagem->id ?>" class="list-group-item d-flex align-items-center">
                                 <img src="<?php
-                                            $arquivo = './images/perfil/' . $mensagem->remetente_id . '.jpg';
+                                            $arquivo = './assets/perfil/' . $mensagem->remetente_id . '.jpg';
 
                                             if (file_exists($arquivo)) {
                                                 echo $arquivo;
                                             } else {
-                                                echo './images/perfil/avatar.png';
+                                                echo './assets/perfil/avatar.png';
                                             }
                                             ?>" alt="Avatar" class="img-circle avatar img-profile">
 
@@ -121,7 +121,7 @@ if (isset($_GET['mensagemId'])) {
                         <h4><?= htmlspecialchars($mensagemSelecionada->titulo) ?></h4>
                         <p><?= htmlspecialchars($mensagemSelecionada->conteudo) ?></p>
                         <?php
-                        $arquivo = './images/mensagens/' . $mensagemSelecionada->id . '.jpg';
+                        $arquivo = './assets/mensagens/' . $mensagemSelecionada->id . '.jpg';
 
                         if (file_exists($arquivo)) {
                             echo '<img src="' . $arquivo . '" alt="img" class="img-ajustada">';
@@ -131,7 +131,7 @@ if (isset($_GET['mensagemId'])) {
                     </div>
                 </div>
             <?php } else { ?>
-                <img src="./assets/logo-semfundo.png" alt="Imagem" class="img-background">
+                <img src="./assets/images/logo-semfundo.png" alt="Imagem" class="img-background">
             <?php } ?>
         </div>
     </div>

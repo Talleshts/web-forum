@@ -12,7 +12,7 @@
         <form action="../controllers/controllerUsuario.php" method="post">
             <a href="index.php">
                 <div class="voltar">
-                    <img src="assets/seta-voltar.png" alt="seta virada para a esquerda" class="seta">
+                    <img src="assets/icons/seta-voltar.png" alt="seta virada para a esquerda" class="seta">
                     <p class="back-button">
                         &#8592; &nbsp Voltar para o site
                     </p>
