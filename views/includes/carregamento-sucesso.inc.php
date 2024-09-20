@@ -8,13 +8,13 @@
                     <div class="spinner-border" role="status">
                         <span class="sr-only"></span>
                     </div>
-                    <p>Enviando mensagem, aguarde...</p>
+                    <p id="loadingMessage"><?= htmlspecialchars($loadingMessage) ?></p>
                 </div>
 
                 <!-- Success Check -->
                 <div id="success-check" style="display: none;">
                     <i class="fa fa-check-circle" style="color: green; font-size: 48px;"></i>
-                    <p>Mensagem enviada com sucesso!</p>
+                    <p id="successMessage"><?= htmlspecialchars($successMessage) ?></p>
                     <button type="button" class="btn btn-success" id="closeModalBtn" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
@@ -35,11 +35,12 @@
         document.getElementById('success-check').style.display = 'block';
     }
 
-    // Função para fechar o modal e voltar para a página anterior
-    document.getElementById('closeModalBtn').addEventListener('click', function() {
-        var loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
-        loadingModal.hide();
-        window.location.href = 'visualizarMensagens.php'; // Redirecionar para a página desejada
+    // Atualiza as mensagens do modal
+    document.addEventListener('DOMContentLoaded', function() {
+        var loadingMessage = <?= json_encode($loadingMessage) ?>;
+        var successMessage = <?= json_encode($successMessage) ?>;
+        document.getElementById('loadingMessage').textContent = loadingMessage;
+        document.getElementById('successMessage').textContent = successMessage;
     });
 </script>
 

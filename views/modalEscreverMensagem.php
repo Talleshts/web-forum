@@ -51,10 +51,7 @@ if (isset($_SESSION['mensagemSelecionada'])) {
                         <input type="file" class="form-control" name="pImagem">
                     </div>
                     <div class="modal-footer">
-                        <?php
-                        $desabilitado = ($msg_selecionada != null) ? '' : 'disabled';
-                        echo '<input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" ' .    $desabilitado . '>'
-                        ?>
+                        <input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" disabled>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     </div>
                     <input type="hidden" name="pOpcao" value="2">

@@ -2,7 +2,6 @@
 require_once '../classes/usuario.inc.php';
 require_once '../classes/mensagem.inc.php';
 require_once '../dao/mensagemDao.inc.php';
-require_once 'includes/carregamento-sucesso.inc.php';
 require_once 'includes/cabecalho.inc.php';
 
 
@@ -12,6 +11,9 @@ $mensagemSelecionada = null;
 if (isset($_SESSION['mensagemEnviada']) && $_SESSION['mensagemEnviada'] === true) {
     // Remove a flag imediatamente antes de continuar, para garantir que não reapareça
     unset($_SESSION['mensagemEnviada']);
+
+    $loadingMessage = $loadingMessage ?? 'Enviando mensagem, aguarde...';
+    $successMessage = $successMessage ?? 'Mensagem enviada com sucesso!';
 
     echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -135,6 +137,9 @@ if (isset($_GET['mensagemId'])) {
     </div>
 </div>
 
+<?php
+include 'includes/carregamento-sucesso.inc.php';
+?>
 
 <?php
 require_once 'includes/rodape.inc.php';

@@ -5,6 +5,26 @@ require_once 'includes/cabecalho.inc.php';
 
 $usuario = $_SESSION['usuarioLogado'];
 
+if (isset($_SESSION['cadastroAtualizado']) && $_SESSION['cadastroAtualizado'] === true) {
+    // Remove a flag imediatamente antes de continuar, para garantir que não reapareça
+    unset($_SESSION['cadastroAtualizado']);
+
+    $loadingMessage = 'Atualizando dados, aguarde...';
+    $successMessage = 'Dados atualizados com sucesso!';
+
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            loadingModal.show();
+            showLoading();
+            
+            // Aguarda o tempo do carregamento e mostra o sucesso
+            setTimeout(function() {
+                showSuccess();
+            }, 1500);
+        });
+    </script>";
+}
 ?>
 
 <link rel="stylesheet" type="text/css" href="css/cadastroAtualizar.css">
@@ -68,6 +88,9 @@ $usuario = $_SESSION['usuarioLogado'];
     </form>
 </div>
 
+<?php
+include 'includes/carregamento-sucesso.inc.php';
+?>
 
 <?php
 require_once 'includes/rodape.inc.php';

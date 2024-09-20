@@ -78,7 +78,10 @@ switch ($opcao) {
         if ($_FILES['pImagem']['size'] > 0) {
             uploadImagemCadastro($id);
         }
-        header('Location: controllerMensagem.php?pOpcao=1');
+
+        $_SESSION['cadastroAtualizado'] = true;
+
+        header('Location: ../views/cadastroAtualizar.php');
 
         break;
 
