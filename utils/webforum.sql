@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/09/2024 às 23:54
+-- Tempo de geração: 20/09/2024 às 04:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -24,31 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `conversa`
---
-
-CREATE TABLE `conversa` (
-  `id` varchar(36) NOT NULL,
-  `data_criacao` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Despejando dados para a tabela `conversa`
---
-
-INSERT INTO `conversa` (`id`, `data_criacao`) VALUES
-('21745833-1874-4cbf-9ee9-731333077451', '0000-00-00 00:00:00'),
-('3aa1fff1-cc6d-4521-b1ec-1afd6f1518c4', '0000-00-00 00:00:00'),
-('46b36b80-42b4-4189-a187-4df9ddd65b3b', '0000-00-00 00:00:00'),
-('542b9b41-891b-4956-a519-103c92234d64', '0000-00-00 00:00:00'),
-('5c3c7639-cc31-49a9-9163-9f3f9fc28c4d', '0000-00-00 00:00:00'),
-('707d909c-8f0b-4dde-94fc-1efa177a278b', '0000-00-00 00:00:00'),
-('814b948b-5d7e-45f4-ac8c-830c14cd4875', '0000-00-00 00:00:00'),
-('f53be27c-948f-47f3-8fe4-b26e8a038236', '0000-00-00 00:00:00');
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `mensagem`
 --
 
@@ -57,8 +32,8 @@ CREATE TABLE `mensagem` (
   `assunto` varchar(128) DEFAULT NULL,
   `titulo` char(128) NOT NULL,
   `conteudo` text DEFAULT NULL,
-  `remetente` int(10) UNSIGNED NOT NULL,
-  `destinatario` int(10) UNSIGNED NOT NULL,
+  `remetente` varchar(36) NOT NULL,
+  `destinatario` varchar(36) NOT NULL,
   `data` datetime NOT NULL,
   `id_conversa` varchar(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -68,10 +43,10 @@ CREATE TABLE `mensagem` (
 --
 
 INSERT INTO `mensagem` (`id`, `assunto`, `titulo`, `conteudo`, `remetente`, `destinatario`, `data`, `id_conversa`) VALUES
-('319001b5-e825-4a1b-b315-863c49c334f0', '', 'Teste livro 2', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n\r\n', 1, 1, '2024-09-19 02:21:25', ''),
-('96af4e00-dd21-4aa6-8e01-6d9c42f7975e', 'vbsfb', 'vdfbdf', 'bv gnj', 1, 1, '2024-09-19 02:11:20', ''),
-('c5c3c444-387f-4f24-b054-aa2cf7d8a61e', 'vcdvbs', 'Envio de mensagem', 'tdrhsv', 1, 2, '2024-09-19 02:34:20', ''),
-('eb44a117-b141-4b45-a367-fba2e2b25a30', 'Vasco', 'MEnsagem JC', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n\r\n', 1, 76, '2024-09-19 03:16:11', '');
+('3536ac63-31c2-4d96-88ab-cf0f63f9a011', 'Trabalho', 'Protótipo de tela', '\"On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.\"\r\n\r\n', '7a987bd4-0846-4816-a410-d562dc3a8544', 'b4befde6-dbf3-421e-9637-0702495d54e7', '2024-09-20 04:31:10', ''),
+('3b34cb13-6547-4892-beae-64db46cd4806', 'Projeto', 'Boa noite', '\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\n\r\n', 'b4befde6-dbf3-421e-9637-0702495d54e7', '7a987bd4-0846-4816-a410-d562dc3a8544', '2024-09-20 04:27:36', ''),
+('871fbce2-ea2a-4eaa-ad3c-451bce619704', 'Apenas imagem', 'Foto', '', '7a987bd4-0846-4816-a410-d562dc3a8544', '438cd455-7844-4177-97de-082a1ed7cd74', '2024-09-20 04:29:53', ''),
+('8d46eb7b-16a2-4951-93cb-4e8097c031d2', 'Finibus Bonorum et Malorum', 'Boa noite', '\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"\r\n\r\n', 'b4befde6-dbf3-421e-9637-0702495d54e7', '438cd455-7844-4177-97de-082a1ed7cd74', '2024-09-20 04:28:47', '');
 
 -- --------------------------------------------------------
 
@@ -80,7 +55,7 @@ INSERT INTO `mensagem` (`id`, `assunto`, `titulo`, `conteudo`, `remetente`, `des
 --
 
 CREATE TABLE `usuario` (
-  `idUsuario` int(10) UNSIGNED NOT NULL,
+  `idUsuario` varchar(36) NOT NULL,
   `nome` char(50) NOT NULL,
   `email` char(25) NOT NULL,
   `login` char(13) NOT NULL,
@@ -92,44 +67,28 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `nome`, `email`, `login`, `senha`) VALUES
-(1, 'Filipe Teste', 'teste@mail.com', 'teste@mail.co', '1234'),
-(2, 'usuario2', 'usuario2@mail.com', 'usuario2@mail', '1234'),
-(76, 'JC', 'vocevaidormir@mail.com', 'vocevaidormir', '1234');
+('438cd455-7844-4177-97de-082a1ed7cd74', 'Usuário', 'usuario@mail.com', 'usuario@mail.', '1234'),
+('7a987bd4-0846-4816-a410-d562dc3a8544', 'Talles', 'talles@mail.com', 'talles@mail.c', '1234'),
+('b4befde6-dbf3-421e-9637-0702495d54e7', 'Filipe', 'filipe@mail.com', 'filipe@mail.c', '1234');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `conversa`
---
-ALTER TABLE `conversa`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Índices de tabela `mensagem`
 --
 ALTER TABLE `mensagem`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_mensagem_id_rem` (`remetente`),
+  ADD KEY `fk_conversa_id_rem` (`id_conversa`),
   ADD KEY `fk_mensagem_id_dest` (`destinatario`),
-  ADD KEY `fk_conversa_id_rem` (`id_conversa`);
+  ADD KEY `fk_mensagem_id_rem` (`remetente`);
 
 --
 -- Índices de tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`);
-
---
--- AUTO_INCREMENT para tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- Restrições para tabelas despejadas

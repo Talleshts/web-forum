@@ -21,7 +21,7 @@ class UsuarioDao
         $sqlVerificaEmail->bindValue(':email', $email);
         $sqlVerificaEmail->execute();
         if ($sqlVerificaEmail->rowCount() == 0) {
-            $sql = $this->con->prepare("INSERT INTO usuario (idUsuario,email, login, nome, senha) VALUES (:id, :email, :email, :nome, :senha)");
+            $sql = $this->con->prepare("INSERT INTO usuario (idUsuario, email, login, nome, senha) VALUES (:id, :email, :email, :nome, :senha)");
             $sql->bindValue(':id', $id_usuario);
             $sql->bindValue(':email', $email);
             $sql->bindValue(':nome', $nome);
