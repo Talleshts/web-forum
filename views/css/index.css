@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #4d260b; /* Fundo marrom */
   margin: 0 auto;
   padding: 0;
@@ -37,7 +37,12 @@ body {
 
 .apresentacao {
   flex: 1;
-  padding-left: 20px;
+  padding: 0px 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .actions {
     display: flex;
