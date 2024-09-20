@@ -51,8 +51,8 @@ if (isset($_SESSION['mensagemSelecionada'])) {
                         <input type="file" class="form-control" name="pImagem">
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" disabled>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <input type="submit" id="submitButton" class="btn btn-primary" value="Enviar" disabled>
                     </div>
                     <input type="hidden" name="pOpcao" value="2">
                     <input type="hidden" name="pRemetente" value="<?= $_SESSION['usuarioLogado']->id; ?>">

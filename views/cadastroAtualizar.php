@@ -83,8 +83,8 @@ if (isset($_SESSION['cadastroAtualizado']) && $_SESSION['cadastroAtualizado'] ==
             unset($_SESSION['cadastroErro']);
         }
         ?>
-        <input type="submit" value="Atualizar">
-        <input type="hidden" value="5" name="pOpcao">
+        <input type="submit" class="botao-atualizar" value="Atualizar">
+        <input type="hidden" class="btn btn-secondary" value="5" name="pOpcao">
     </form>
 </div>
 
