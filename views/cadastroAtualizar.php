@@ -49,6 +49,7 @@ if (isset($_SESSION['cadastroAtualizado']) && $_SESSION['cadastroAtualizado'] ==
     <div class="avatar-container">
         <?php
         $arquivo = './images/perfil/' . $usuario->id . '.jpg';
+        echo $arquivo;
         $imagem = file_exists($arquivo) ? $arquivo : './assets/images/avatar.png';
         ?>
         <img src="<?= $imagem ?>" alt="Avatar" class="avatar">

@@ -59,31 +59,35 @@ if (isset($_GET['mensagemId'])) {
                 <div class="panel-body no-padding">
                     <div class="list-group no-margin list-message">
                         <?php
-                        foreach ($mensagens as $mensagem) {
+                        if (count($mensagens) == 0) {
+                            echo '<p class="list-group-item">Nenhuma mensagem encontrada.</p>';
+                        } else {
+                            foreach ($mensagens as $mensagem) {
                         ?>
-                            <a href="visualizarMensagens.php?mensagemId=<?= $mensagem->id ?>" class="list-group-item d-flex align-items-center">
-                                <img src="<?php
-                                            $id_perfil = (isset($_SESSION['enviadas'])) ? $mensagem->destinatario_id : $mensagem->remetente_id;
-                                            $arquivo = './images/perfil/' . $id_perfil . '.jpg';
+                                <a href="visualizarMensagens.php?mensagemId=<?= $mensagem->id ?>" class="list-group-item d-flex align-items-center">
+                                    <img src="<?php
+                                                $id_perfil = (isset($_SESSION['enviadas'])) ? $mensagem->destinatario_id : $mensagem->remetente_id;
+                                                $arquivo = './images/perfil/' . $id_perfil . '.jpg';
 
-                                            if (!file_exists($arquivo)) {
-                                                $arquivo = './assets/images/avatar.png';
-                                            }
-                                            echo $arquivo;
-                                            ?>" alt="Avatar" class="img-circle avatar img-profile">
+                                                if (!file_exists($arquivo)) {
+                                                    $arquivo = './assets/images/avatar.png';
+                                                }
+                                                echo $arquivo;
+                                                ?>" alt="Avatar" class="img-circle avatar img-profile">
 
-                                <div>
-                                    <?php
-                                    if (isset($_SESSION['enviadas'])) {
-                                        echo '<h4 class="list-group-item-heading">' . $mensagem->destinatario_email . '</h4>';
-                                    } else {
-                                        echo '<h4 class="list-group-item-heading">' . $mensagem->remetente_email . '</h4>';
-                                    }
-                                    ?>
-                                    <p class="list-group-item-text"><strong><?= $mensagem->assunto ?></strong></p>
-                                </div>
-                            </a>
+                                    <div>
+                                        <?php
+                                        if (isset($_SESSION['enviadas'])) {
+                                            echo '<h4 class="list-group-item-heading">' . $mensagem->destinatario_email . '</h4>';
+                                        } else {
+                                            echo '<h4 class="list-group-item-heading">' . $mensagem->remetente_email . '</h4>';
+                                        }
+                                        ?>
+                                        <p class="list-group-item-text"><strong><?= $mensagem->assunto ?></strong></p>
+                                    </div>
+                                </a>
                         <?php
+                            }
                         }
                         ?>
                     </div>
