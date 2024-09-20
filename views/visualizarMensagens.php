@@ -63,13 +63,14 @@ if (isset($_GET['mensagemId'])) {
                         ?>
                             <a href="visualizarMensagens.php?mensagemId=<?= $mensagem->id ?>" class="list-group-item d-flex align-items-center">
                                 <img src="<?php
-                                            $arquivo = './images/perfil/' . $mensagem->remetente_id . '.jpg';
+                                            $id_foto = (isset($_SESSION['enviadas'])) ? $mensagem->destinatario_id : $mensagem->remetente_id;
+                                            $arquivo = './images/perfil/' . $id_foto . '.jpg';
 
-                                            if (file_exists($arquivo)) {
-                                                echo $arquivo;
-                                            } else {
-                                                echo './images/perfil/avatar.png';
+                                            if (!file_exists($arquivo)) {
+                                                $arquivo = './images/perfil/avatar.png';
                                             }
+
+                                            echo $arquivo;
                                             ?>" alt="Avatar" class="img-circle avatar img-profile">
 
                                 <div>
@@ -97,7 +98,16 @@ if (isset($_GET['mensagemId'])) {
                         <div class="head-msg">
                             <div class="media">
                                 <a class="pull-left" href="#">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Avatar" class="img-circle avatar">
+                                    <img src="<?php
+                                                $id_foto_msg = $mensagemSelecionada->remetente_id;
+                                                $arquivo_msg = './images/perfil/' . $id_foto_msg . '.jpg';
+
+                                                if (!file_exists($arquivo_msg)) {
+                                                    $arquivo_msg = './images/perfil/avatar.png';
+                                                }
+
+                                                echo $arquivo_msg;
+                                                ?>" alt="Avatar" class="img-circle avatar">
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading"><?= htmlspecialchars($mensagemSelecionada->remetente_nome) ?></h4>
