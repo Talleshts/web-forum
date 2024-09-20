@@ -48,8 +48,8 @@ if (isset($_SESSION['cadastroAtualizado']) && $_SESSION['cadastroAtualizado'] ==
     <h1>Atualizar Dados</h1>
     <div class="avatar-container">
         <?php
-        $arquivo = './assets/perfil/' . $usuario->id . '.jpg';
-        $imagem = file_exists($arquivo) ? $arquivo : './assets/perfil/avatar.png';
+        $arquivo = './images/perfil/' . $usuario->id . '.jpg';
+        $imagem = file_exists($arquivo) ? $arquivo : './assets/images/avatar.png';
         ?>
         <img src="<?= $imagem ?>" alt="Avatar" class="avatar">
         <?php

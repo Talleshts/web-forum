@@ -52,6 +52,8 @@ switch ($opcao) {
         // excluir mensagem
         $id = $_REQUEST['pId'];
 
+        excluirImagem($id);
+
         $mensagemDao = new MensagemDao();
         $mensagemDao->excluirMensagem($id);
 
@@ -80,7 +82,7 @@ function uploadImagemMensagem($id)
 {
     $imagem = $_FILES['pImagem'];
     $nome = $id . '.jpg';
-    $caminho = '../views/assets/mensagens/' . $nome;
+    $caminho = '../views/images/mensagens/' . $nome;
 
     if ($imagem != null) {
         $nome_temporario = $_FILES['pImagem']['tmp_name'];
@@ -88,22 +90,11 @@ function uploadImagemMensagem($id)
     }
 }
 
-function obterFotoMensagem($id)
+function excluirImagem($id)
 {
-    $arquivo = '../assets/mensagens/' . $id . '.jpg';
-
-    if (file_exists($arquivo)) {
-        return $arquivo;
-    }
-}
-
-function obterFotoPerfil($id)
-{
-    $arquivo = '../assets/perfil/' . $id . '.jpg';
-
-    if (file_exists($arquivo)) {
-        return $arquivo;
-    } else {
-        return '../assets/perfil/avatar.jpg';
+    $nome = $id . '.jpg';
+    $caminho = '../views/images/mensagens/' . $nome;
+    if (file_exists($caminho)) {
+        unlink($caminho);
     }
 }
